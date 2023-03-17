@@ -1,8 +1,13 @@
 // Sizes
 const sizes = {
 	width: window.innerWidth,
-	height: window.innerHeight
+	height: window.innerHeight,
+	aspectRatio: window.innerWidth / window.innerHeight
 }
+
+// Distances
+const objectsDistance = 4
+let xDistance = 2
 
 // Resizing
 window.addEventListener('resize', () =>
@@ -36,8 +41,12 @@ const camera = new THREE.PerspectiveCamera(
 camera.position.set(0, 0, 3)
 scene.add(camera)
 
+if(sizes.aspectRatio < 1)
+{
+	xDistance = 1
+}
+
 // Meshes
-const objectsDistance = 4
 
 const material = new THREE.MeshNormalMaterial()
 
@@ -61,9 +70,11 @@ const mesh3 = new THREE.Mesh(
 	material
 )
 
-mesh1.position.x = 2
-mesh2.position.x = -2
-mesh3.position.x = 2
+console.log(xDistance)
+
+mesh1.position.x = xDistance
+mesh2.position.x = -xDistance
+mesh3.position.x = xDistance
 
 mesh0.position.y = - objectsDistance * 0
 mesh1.position.y = - objectsDistance * 1
