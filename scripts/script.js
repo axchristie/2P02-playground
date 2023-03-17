@@ -70,8 +70,6 @@ const mesh3 = new THREE.Mesh(
 	material
 )
 
-console.log(xDistance)
-
 mesh1.position.x = xDistance
 mesh2.position.x = -xDistance
 mesh3.position.x = xDistance
