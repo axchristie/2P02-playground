@@ -44,6 +44,9 @@ scene.add(camera)
 if(sizes.aspectRatio < 1)
 {
 	xDistance = 1
+
+	// Update sizes
+	sizes.height = window.outerHeight
 }
 
 // Meshes
