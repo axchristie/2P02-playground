@@ -46,7 +46,7 @@ if(sizes.aspectRatio < 1)
 	xDistance = 1
 
 	// Update sizes
-	sizes.height = window.outerHeight
+	sizes.height = window.document.documentElement.clientHeight
 }
 
 // Meshes
@@ -103,6 +103,19 @@ window.addEventListener('mousemove', () =>
 		cursor.y = (event.clientY / sizes.width) - 0.5
 	})
 
+// Accelerometer
+const acc = {}
+acc.x = 0
+acc.y = 0
+
+window.addEventListener('devicemotion',  () =>
+	{
+		acc.x = event.accelerationIncludingGravity.x
+		acc.y = event.accelerationIncludingGravity.y
+
+		console.log(acc.x, acc.y)
+	})
+
 // Renderer
 const renderer = new THREE.WebGLRenderer({
 	canvas: canvas,
@@ -125,6 +138,19 @@ const animation = () =>
 	mesh0.rotation.x = - elapsedTime * 0.1
 	mesh0.rotation.y = - elapsedTime * 0.1
 
+	if(sizes.aspectRatio < 1)
+	{
+	// Mobile uses accY
+	mesh1.rotation.x = - acc.y
+	mesh1.rotation.y = - acc.x
+	
+	mesh2.rotation.x = - acc.y
+	mesh2.rotation.y = - acc.x
+	
+	mesh3.rotation.x = - acc.y
+	mesh3.rotation.y = - acc.x
+	} else {
+	// Regular uses cursor
 	mesh1.rotation.x = - cursor.y * 0.5
 	mesh1.rotation.y = - cursor.x * 0.5
 	
@@ -133,6 +159,7 @@ const animation = () =>
 	
 	mesh3.rotation.x = - cursor.y * 0.5
 	mesh3.rotation.y = - cursor.x * 0.5
+	}
 	
 	// Render
 	renderer.render(scene, camera)
