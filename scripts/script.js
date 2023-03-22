@@ -16,8 +16,10 @@ if(sizes.aspectRatio < 1)
 // Resizing
 window.addEventListener('resize', () =>
 	{
-		if(sizes.aspectRatio > 1)
+		if(sizes.aspectRatio < 1)
 		{
+		sizes.height = window.document.documentElement.clientHeight
+		} else {
 		// Update sizes
 		sizes.width = window.innerWidth
 		sizes.height = window.innerHeight
@@ -138,14 +140,14 @@ const animation = () =>
 	if(sizes.aspectRatio < 1)
 	{
 	// Mobile uses accY
-	mesh1.rotation.x = - acc.y
-	mesh1.rotation.y = - acc.x
+	mesh1.rotation.x = - acc.y * 10
+	mesh1.rotation.y = - acc.x * 10
 	
-	mesh2.rotation.x = - acc.y
-	mesh2.rotation.y = - acc.x
+	mesh2.rotation.x = - acc.y * 10
+	mesh2.rotation.y = - acc.x * 10
 	
-	mesh3.rotation.x = - acc.y
-	mesh3.rotation.y = - acc.x
+	mesh3.rotation.x = - acc.y * 10
+	mesh3.rotation.y = - acc.x * 10
 	} else {
 	// Regular uses cursor
 	mesh1.rotation.x = - cursor.y * 0.5
