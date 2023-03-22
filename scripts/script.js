@@ -8,10 +8,16 @@ const sizes = {
 // Distances
 const objectsDistance = 4
 let xDistance = 2
+if(sizes.aspectRatio < 1)
+{
+	 xDistance = 1
+}
 
 // Resizing
 window.addEventListener('resize', () =>
 	{
+		if(sizes.aspectRatio > 1)
+		{
 		// Update sizes
 		sizes.width = window.innerWidth
 		sizes.height = window.innerHeight
@@ -23,6 +29,7 @@ window.addEventListener('resize', () =>
 		// Update renderer
 		renderer.setSize(sizes.width, sizes.height)
 		renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+		}
 	})
 
 // Canvas
@@ -40,14 +47,6 @@ const camera = new THREE.PerspectiveCamera(
 )
 camera.position.set(0, 0, 3)
 scene.add(camera)
-
-if(sizes.aspectRatio < 1)
-{
-	xDistance = 1
-
-	// Update sizes
-	sizes.height = window.document.documentElement.clientHeight
-}
 
 // Meshes
 
@@ -108,12 +107,10 @@ const acc = {}
 acc.x = 0
 acc.y = 0
 
-window.addEventListener('devicemotion',  () =>
+window.addEventListener('devicemotion',  (event) =>
 	{
 		acc.x = event.accelerationIncludingGravity.x
 		acc.y = event.accelerationIncludingGravity.y
-
-		console.log(acc.x, acc.y)
 	})
 
 // Renderer
