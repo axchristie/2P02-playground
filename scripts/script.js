@@ -18,7 +18,7 @@ window.addEventListener('resize', () =>
 	{
 		if(sizes.aspectRatio < 1)
 		{
-		sizes.height = window.document.documentElement.clientHeight
+		sizes.height = window.screen.height
 		} else {
 		// Update sizes
 		sizes.width = window.innerWidth
