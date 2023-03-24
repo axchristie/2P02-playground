@@ -11,6 +11,11 @@ let xDistance = 2
 if(sizes.aspectRatio < 1)
 {
 	 xDistance = 1
+
+	window.scrollTo(0, 100)
+	sizes.height = window.innerHeight
+	window.scrollTo(0, 0)
+	console.log('sizes.height is locked at ' + sizes.height)
 }
 
 // Resizing
@@ -18,7 +23,7 @@ window.addEventListener('resize', () =>
 	{
 		if(sizes.aspectRatio < 1)
 		{
-		sizes.height = window.screen.height
+		// Do nothing to keep sizes.height locked.
 		} else {
 		// Update sizes
 		sizes.width = window.innerWidth
