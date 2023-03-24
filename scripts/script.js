@@ -109,23 +109,42 @@ window.addEventListener('mousemove', () =>
 		cursor.y = (event.clientY / sizes.width) - 0.5
 	})
 
-// Accelerometer
-const acc = {}
-acc.x = 0
-acc.y = 0
-
-window.addEventListener('devicemotion',  (event) =>
-	{
-		acc.x = event.accelerationIncludingGravity.x
-		acc.y = event.accelerationIncludingGravity.y
-	})
-
 // Renderer
 const renderer = new THREE.WebGLRenderer({
 	canvas: canvas,
 	alpha: true
 })
 renderer.setSize(sizes.width, sizes.height)
+
+// Accelerometer
+const acc = {}
+acc.x = 0
+acc.y = 0
+
+function getAccel(){
+    DeviceMotionEvent.requestPermission().then(response => {
+        if (response == 'granted') {
+            console.log("accelerometer permission granted")
+
+        // Add a listener to get smartphone acceleration 
+        // in the XYZ axes (units in m/s^2)
+            window.addEventListener('deviceorientation', (event) => {
+
+		// Expose each orientation angle in a more readable way
+                rotation_degrees = event.alpha;
+                frontToBack_degrees = event.beta;
+                leftToRight_degrees = event.gamma;
+                
+                // Update velocity according to how tilted the phone is
+                // Since phones are narrower than they are long, double the increase to the x velocity
+                acc.x = vx + leftToRight_degrees * updateRate*2 
+                acc.y = vy + frontToBack_degrees * updateRate
+            })
+
+        }
+    })
+}
+
 
 // Animate
 const clock = new THREE.Clock()
