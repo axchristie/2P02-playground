@@ -12,9 +12,8 @@ if(sizes.aspectRatio < 1)
 {
 	 xDistance = 1
 
-	window.scrollTo(0, 100)
+	window.scrollTo(0, 500)
 	sizes.height = window.innerHeight
-	window.scrollTo(0, 0)
 	console.log('sizes.height is locked at ' + sizes.height)
 }
 
