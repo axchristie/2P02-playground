@@ -5,6 +5,11 @@ const sizes = {
 	aspectRatio: window.innerWidth / window.innerHeight
 }
 
+const acc = {}
+acc.x = 0
+acc.y = 0
+
+
 // Distances
 const objectsDistance = 4
 let xDistance = 2
@@ -12,9 +17,36 @@ if(sizes.aspectRatio < 1)
 {
 	 xDistance = 1
 
+	// Viewport height
 	window.scrollTo(0, 500)
-	sizes.height = window.innerHeight
+	sizes.height = window.screen.height
 	console.log('sizes.height is locked at ' + sizes.height)
+
+	// Accelerometer
+function getAccel(){
+    DeviceMotionEvent.requestPermission().then(response => {
+        if (response == 'granted') {
+            console.log("accelerometer permission granted")
+
+        // Add a listener to get smartphone acceleration 
+        // in the XYZ axes (units in m/s^2)
+            window.addEventListener('deviceorientation', (event) => {
+
+		// Expose each orientation angle in a more readable way
+                rotation_degrees = event.alpha;
+                frontToBack_degrees = event.beta;
+                leftToRight_degrees = event.gamma;
+                
+                // Update velocity according to how tilted the phone is
+                // Since phones are narrower than they are long, double the increase to the x velocity
+                acc.x = vx + leftToRight_degrees * updateRate*2 
+                acc.y = vy + frontToBack_degrees * updateRate
+            })
+
+        }
+    })
+}
+getAccel()
 }
 
 // Resizing
@@ -115,34 +147,6 @@ const renderer = new THREE.WebGLRenderer({
 })
 renderer.setSize(sizes.width, sizes.height)
 
-// Accelerometer
-const acc = {}
-acc.x = 0
-acc.y = 0
-
-function getAccel(){
-    DeviceMotionEvent.requestPermission().then(response => {
-        if (response == 'granted') {
-            console.log("accelerometer permission granted")
-
-        // Add a listener to get smartphone acceleration 
-        // in the XYZ axes (units in m/s^2)
-            window.addEventListener('deviceorientation', (event) => {
-
-		// Expose each orientation angle in a more readable way
-                rotation_degrees = event.alpha;
-                frontToBack_degrees = event.beta;
-                leftToRight_degrees = event.gamma;
-                
-                // Update velocity according to how tilted the phone is
-                // Since phones are narrower than they are long, double the increase to the x velocity
-                acc.x = vx + leftToRight_degrees * updateRate*2 
-                acc.y = vy + frontToBack_degrees * updateRate
-            })
-
-        }
-    })
-}
 
 
 // Animate
