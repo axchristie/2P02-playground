@@ -1,3 +1,5 @@
+import * as THREE from "https://ga.jspm.io/npm:three@0.153.0/build/three.module.js"
+
 /********************
  ** MOUSE CONTROLS **
  *******************/
