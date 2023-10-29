@@ -1,6 +1,8 @@
 import * as THREE from "three"
+import { OrbitControls} from "OrbitControls"
 
 console.log('hello world')
+console.log(OrbitControls)
 
 /********************
  ** MOUSE CONTROLS **
