@@ -1,4 +1,8 @@
 import * as THREE from "https://ga.jspm.io/npm:three@0.153.0/build/three.module.js"
+import OrbitControls from "https://ga.jspm.io/npm:three@0.153.0/examples/jsm/controls/OrbitControls.js"
+
+console.log('hello world')
+console.log(OrbitControls)
 
 /********************
  ** MOUSE CONTROLS **
