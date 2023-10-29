@@ -1,9 +1,6 @@
 import * as THREE from "three"
 import { OrbitControls} from "OrbitControls"
 
-console.log('hello world')
-console.log(OrbitControls)
-
 /********************
  ** MOUSE CONTROLS **
  *******************/
@@ -109,6 +106,10 @@ torusKnot.castShadow = true
 torusKnot.position.set(4, 2, 0)
 scene.add(torusKnot)
 
+// Orbit Controls
+const controls = new OrbitControls(camera, canvas)
+controls.enableDamping = true
+
 
 /********************
  ** ANIMATION LOOP **
@@ -126,6 +127,9 @@ const animation = () =>
 	
 	// Animate torus knot
 	torusKnot.rotation.y = elapsedTime * 0.2
+
+	// Orbit Controls
+	controls.update()
 	
 	// Renderer
 	renderer.render(scene, camera)
@@ -134,6 +138,7 @@ const animation = () =>
 	window.requestAnimationFrame(animation)
 
 	// Mouse controls
+	/*
 	const multiplier = 0.1
 	if(mouseDown){
 		camera.position.x = (Math.sin(mouse.x * Math.PI * 2) * 10) + 5
@@ -141,6 +146,7 @@ const animation = () =>
 		camera.position.y = (mouse.y + 1) * 10
 	}
 	camera.lookAt(plane.position)
+	*/
 }
 
 animation()
