@@ -82,7 +82,7 @@ const planeMaterial = new THREE.MeshStandardMaterial({
 	color: new THREE.Color('gray')
 })
 const plane = new THREE.Mesh(planeGeometry, planeMaterial)
-plane.rotation.x = Math.PI * 0.4
+plane.rotation.x = Math.PI * 0.5
 plane.receiveShadow = true
 plane.position.set(0, -2, 0)
 scene.add(plane)
