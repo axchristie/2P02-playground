@@ -48,7 +48,7 @@ scene.add(torusKnot)
 const planeGeometry = new THREE.PlaneGeometry(5, 5, 20, 20)
 const planeMaterial = new THREE.MeshBasicMaterial({
 	side: THREE.DoubleSide,
-	color: new THREE.Color('blue'),
+	color: new THREE.Color('forestgreen'),
 	wireframe: false
 })
 const plane = new THREE.Mesh(planeGeometry, planeMaterial)

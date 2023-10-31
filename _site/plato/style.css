@@ -2,6 +2,13 @@ body {
 	margin: 0 auto;
 }
 
+h1 {
+	color: white;
+	font-size: 48px;
+	text-align: center;
+	text-shadow: 2px 2px 4px #000000;
+}
+
 .webgl {
 	position: fixed;
 	top: 0;
