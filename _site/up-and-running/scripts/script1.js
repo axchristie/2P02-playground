@@ -1,5 +1,3 @@
-import * as THREE from "three"
-
 // Canvas
 const canvas = document.querySelector('.webgl')
 
@@ -31,17 +29,8 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(window.innerWidth, window.innerHeight)
 
 // Animate
-const clock = new THREE.Clock()
-
 const animation = () =>
 {
-	// Return elapsedTime
-	const elapsedTime = clock.getElapsedTime()
-
-	// Animate sphere
-	console.log(Math.sin(elapsedTime))
-	cube.position.z = Math.sin(elapsedTime)
-
 	// Renderer
 	renderer.render(scene, camera)
 

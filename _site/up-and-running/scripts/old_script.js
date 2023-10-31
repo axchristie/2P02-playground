@@ -1,5 +1,3 @@
-import * as THREE from "three"
-
 // Sizes
 const sizes = {
 	width: window.innerWidth,
@@ -14,7 +12,7 @@ let xDistance = 2
 if(sizes.aspectRatio < 1)
 {
 	// objects xDistance
-	 xDistance = 2
+	 xDistance = 1
 
 	// Viewport height
 	sizes.height = document.querySelector('#first').clientHeight
@@ -83,9 +81,9 @@ const mesh3 = new THREE.Mesh(
 	material
 )
 
-mesh1.position.x = -xDistance
-mesh2.position.x = xDistance
-mesh3.position.x = -xDistance
+mesh1.position.x = xDistance
+mesh2.position.x = -xDistance
+mesh3.position.x = xDistance
 
 mesh0.position.y = - objectsDistance * 0
 mesh1.position.y = - objectsDistance * 1

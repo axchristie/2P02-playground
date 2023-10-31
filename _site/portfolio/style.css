@@ -1,0 +1,49 @@
+body {
+	background-color: #404040;
+	margin: 0 auto;
+	color: lightgray;
+}
+
+.webgl {
+	position: fixed;
+	top: 0;
+	left: 0;
+	outline: none;
+	z-index: -1;
+}
+
+.splash {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 100vh;
+	text-align: center;
+	text-shadow: 2px 2px 4px #000000;
+}
+
+.splash h1 {
+	font-size: 10vmin;
+}
+
+.splash h2 {
+	font-size: 5vmin;
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 100vh;
+	padding-left: 10%;
+	padding-right: 40%;
+	font-size: 3vmin;
+}
+
+.content h1 {
+	font-size: 5vmin;
+}
+
+.content:nth-child(odd) {
+	padding-left: 40%;
+	padding-right: 10%;
+}

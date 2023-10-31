@@ -1,5 +1,3 @@
-import * as THREE from "three"
-
 // Canvas
 const canvas = document.querySelector('.webgl')
 
@@ -15,14 +13,15 @@ const camera = new THREE.PerspectiveCamera(
 	100
 )
 scene.add(camera)
+camera.position.set(0, 0, 5)
 
 // Test Sphere
 const geometry = new THREE.SphereGeometry(1)
 const material = new THREE.MeshNormalMaterial()
-const cube = new THREE.Mesh(geometry, material)
+const testSphere = new THREE.Mesh(geometry, material)
 
-scene.add(cube)
-camera.position.set(0, 0, 5)
+testSphere.position.set(0, 0, 0)
+scene.add(testSphere)
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({
@@ -40,7 +39,7 @@ const animation = () =>
 
 	// Animate sphere
 	console.log(Math.sin(elapsedTime))
-	cube.position.z = Math.sin(elapsedTime)
+	testSphere.position.z = Math.sin(elapsedTime)
 
 	// Renderer
 	renderer.render(scene, camera)
