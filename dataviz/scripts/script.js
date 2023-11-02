@@ -167,15 +167,15 @@ const experiment = (timer, array) =>
 		console.log(array[timer])
 		if(array[timer] === obj.term1)
 		{
-			obj.term1Value += 0.01
+			obj.term1Value += 0.1
 		}
 		if(array[timer] === obj.term2)
 		{
-			obj.term2Value += 0.01
+			obj.term2Value += 0.1
 		}
 		if(array[timer] === obj.term3)
 		{
-			obj.term3Value += 0.01
+			obj.term3Value += 0.1
 		}
 	} else {
 		reveal = false
@@ -194,12 +194,13 @@ const animation = () =>
 	// Return elapsedTime
 	const elapsedTime = clock.getElapsedTime()
 	const elapsedTimeInt = Math.floor(elapsedTime)
+	const elapsedMs = Math.floor(elapsedTime * 10)
 
 	// Experiment
 	//sphere.scale.y += 0.02
 	if(reveal)
 	{
-		experiment(elapsedTimeInt, array)
+		experiment(elapsedMs, array)
 	}
 	
 	// Update cylinders
