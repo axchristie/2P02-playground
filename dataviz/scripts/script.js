@@ -5,15 +5,11 @@ import { OrbitControls} from "OrbitControls"
 /***********
  ** SETUP **
  ***********/
-// Sizes
 const sizes = {
 	width: window.innerWidth,
 	height: window.innerHeight,
 	aspectRatio: window.innerWidth / window.innerHeight
 }
-
-let reveal = false
-let array
 
 /***********
  ** SCENE **
@@ -31,7 +27,7 @@ const camera = new THREE.PerspectiveCamera(
 	sizes.aspectRatio,
 	0.1,
 	100)
-camera.position.set(0, 2.5, 5)
+camera.position.set(0, 10, -20)
 scene.add(camera)
 
 // Renderer
@@ -39,19 +35,6 @@ const renderer = new THREE.WebGLRenderer({
 	canvas: canvas
 })
 renderer.setSize(sizes.width, sizes.height)
-renderer.shadowMap.enabled = true
-renderer.shadowMap.type = THREE.PCFSoftShadowMap
-
-/************
- ** LIGHTS **
- ************/
-// Directional light
-const directionalLight = new THREE.DirectionalLight( 0xffffff, 1.5)
-directionalLight.position.set(10, 1.4, -1.8)
-directionalLight.castShadow = true
-directionalLight.shadow.mapSize.width = 2048
-directionalLight.shadow.mapSize.height = 2048
-scene.add(directionalLight)
 
 // Orbit Controls
 const controls = new OrbitControls(camera, canvas)
@@ -60,128 +43,115 @@ controls.enableDamping = true
 /************
  ** MESHES **
  ************/
-// Torus Knot
-//const torusKnotGeometry = new THREE.TorusKnotGeometry(1, 0.1)
-//const torusKnotMaterial = new THREE.MeshNormalMaterial()
-//const torusKnot = new THREE.Mesh(torusKnotGeometry, torusKnotMaterial)
-//
-//scene.add(torusKnot)
+const cubeGeometry = new THREE.BoxGeometry(1, 1, 1)
+const cubeMaterial = new THREE.MeshNormalMaterial()
+const redMaterial = new THREE.MeshBasicMaterial({ color: new THREE.Color('red') })
+const greenMaterial = new THREE.MeshBasicMaterial({ color: new THREE.Color('green') })
+const blueMaterial = new THREE.MeshBasicMaterial({ color: new THREE.Color('blue') })
+const cube = new THREE.Mesh(cubeGeometry, cubeMaterial)
 
-// Sphere1
-const cylinderGeometry = new THREE.CylinderGeometry(1, 1, 1)
-const cylinderMaterialRed = new THREE.MeshBasicMaterial({ color: new THREE.Color('red') })
-const cylinderMaterialGreen = new THREE.MeshBasicMaterial({ color: new THREE.Color('green') })
-const cylinderMaterialBlue = new THREE.MeshBasicMaterial({ color: new THREE.Color('blue') })
+const drawCube = (n, material) =>
+{
+	const cube = new THREE.Mesh(cubeGeometry, material)
 
-const cylinderRed = new THREE.Mesh(cylinderGeometry, cylinderMaterialRed)
-const cylinderGreen = new THREE.Mesh(cylinderGeometry, cylinderMaterialGreen)
-const cylinderBlue = new THREE.Mesh(cylinderGeometry, cylinderMaterialBlue)
+	cube.position.x = Math.random() * 10 - 5
+	cube.position.z = Math.random() * 10 - 5
+	cube.position.y = n
 
-cylinderRed.position.x = -4
-cylinderGreen.position.x = 0
-cylinderBlue.position.x = 4
+	cube.rotation.x = Math.random() * 2 * Math.PI
+	cube.rotation.y = Math.random() * 2 * Math.PI
+	cube.rotation.z = Math.random() * 2 * Math.PI
 
-scene.add(cylinderRed)
-scene.add(cylinderGreen)
-scene.add(cylinderBlue)
+	scene.add(cube)
+}
+
 
 /********
  ** UI **
  ********/
 let preset = {}
 
-const obj = {
-	text:  'The quick brown fox jumped over the lazy doge.',
+const uiobj = {
+	text: 'The quick brown fox jumped, over the lazy doge.',
 	term1: 'the',
-	term1Value: 0,
 	term2: 'fox',
-	term2Value: 0,
 	term3: 'doge',
-	term3Value: 0,
-	parseText() {
-		preset = textFolder.save()
-		textFolder.hide()
-		termsFolder.show()
+	textArray: [],
+	saveText() {
+		saveText()
 	},
 	reveal() {
-		preset = termsFolder.save()
-		process()
-		const timer = clock.start()
-		reveal = true
+		saveTerms()
+		parseTextAndTerms()
 	}
 }
-
 
 const ui = new dat.GUI()
 
 // Text
-const textFolder = ui.addFolder('Input Text')
-textFolder.add(obj, 'text')
-textFolder.add(obj, 'parseText').name('Continue')
+const textFolder = ui.addFolder('Source Text')
+textFolder
+	.add(uiobj, 'text')
+textFolder
+	.add(uiobj, 'saveText').name('Continue')
 
-const termsFolder = ui.addFolder('Input Terms')
+// Terms
+const termsFolder = ui.addFolder('Search Terms')
 termsFolder.hide()
-termsFolder.add(obj, 'term1').name('red term')
-termsFolder.add(obj, 'term2').name('green term')
-termsFolder.add(obj, 'term3').name('blue term')
-termsFolder.add(obj, 'reveal').name('reveal')
+termsFolder
+	.add(uiobj, 'term1')
+termsFolder
+	.add(uiobj, 'term2')
+termsFolder
+	.add(uiobj, 'term3')
+termsFolder
+	.add(uiobj, 'reveal').name('Reveal')
 
-const process = () =>
+// Functions
+const saveText = () =>
 {
-	// Remove punctutation and case
-	//const parsedText = obj.text.replace(".", "").toLowerCase()
-	const parsedText = obj.text.toLowerCase()
+	preset = textFolder.save
+	textFolder.hide()
+	termsFolder.show()
+}
+
+const saveTerms = () =>
+{
+	preset = termsFolder.save()
+	termsFolder.hide()
+}
+
+const parseTextAndTerms = () =>
+{
+	// Downcase text
+	const parsedText = uiobj.text.replace(".", "").toLowerCase()
+
 	// Tokenize text
-	array = parsedText.split(/[^\w']+/)
-		console.log(array)
-	// Iterate through tokens
-	/*
-	for (let i = 0; i < array.length; i++)
-	{
-		if(array[i] === obj.term1)
-		{
-			obj.term1Value += 1
-		}
-		if(array[i] === obj.term2)
-		{
-			obj.term2Value += 1
-		}
-		if(array[i] === obj.term3)
-		{
-			obj.term3Value += 1
-		}
-	}
-		console.log(obj.term1, obj.term1Value)
-		console.log(obj.term2, obj.term2Value)
-		console.log(obj.term3, obj.term3Value)
-		*/
+	uiobj.textArray = parsedText.split(/[^\w']+/)
+
+	// Find term 1 and set material
+	findTermInParsedText(uiobj.term1, redMaterial)
+	
+	// Find term 2 and set material
+	findTermInParsedText(uiobj.term2, greenMaterial)
+
+	// Find term 3 and set material
+	findTermInParsedText(uiobj.term3, blueMaterial)
 }
 
-/****************
- ** EXPERIMENT **
- ****************/
-const experiment = (timer, array) =>
+const findTermInParsedText = (term, material) =>
 {
-	if(timer < array.length)
+	// Find loop
+	for (let i = 0; i < uiobj.textArray.length; i++)
 	{
-		console.log(array[timer])
-		if(array[timer] === obj.term1)
-		{
-			obj.term1Value += 0.1
+		if(uiobj.textArray[i] === term){
+			console.log(term)
+			const n = (100 / uiobj.textArray.length) * i * 0.2
+			drawCube(n, material)
 		}
-		if(array[timer] === obj.term2)
-		{
-			obj.term2Value += 0.1
-		}
-		if(array[timer] === obj.term3)
-		{
-			obj.term3Value += 0.1
-		}
-	} else {
-		reveal = false
 	}
-
 }
+
 
 /********************
  ** ANIMATION LOOP **
@@ -193,26 +163,13 @@ const animation = () =>
 {
 	// Return elapsedTime
 	const elapsedTime = clock.getElapsedTime()
-	const elapsedTimeInt = Math.floor(elapsedTime)
-	const elapsedMs = Math.floor(elapsedTime * 10)
 
-	// Experiment
-	//sphere.scale.y += 0.02
-	if(reveal)
-	{
-		experiment(elapsedMs, array)
-	}
-	
-	// Update cylinders
-	cylinderRed.scale.y = obj.term1Value
-	cylinderGreen.scale.y = obj.term2Value
-	cylinderBlue.scale.y = obj.term3Value
-	
-	//torusKnot.position.y = obj.term1Value
+	// rotate cube
+	//cube.rotation.x += 0.1
 
-	// Orbit Controls
+	// Orbit controls
 	controls.update()
-	
+
 	// Renderer
 	renderer.render(scene, camera)
 
