@@ -2,6 +2,7 @@ import * as THREE from "three"
 import * as dat from "lil-gui"
 import { OrbitControls} from "OrbitControls"
 
+
 /***********
  ** SETUP **
  ***********/
@@ -19,7 +20,7 @@ const canvas = document.querySelector('.webgl')
 
 // Scene
 const scene = new THREE.Scene()
-scene.background = new THREE.Color('dimgray')
+scene.background = new THREE.Color('white')
 
 // Camera
 const camera = new THREE.PerspectiveCamera(
@@ -27,12 +28,14 @@ const camera = new THREE.PerspectiveCamera(
 	sizes.aspectRatio,
 	0.1,
 	100)
-camera.position.set(0, 10, -20)
+camera.position.set(0, 20, -10)
+camera.lookAt(200, 500, 20)
 scene.add(camera)
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({
-	canvas: canvas
+	canvas: canvas,
+	antialias: true
 })
 renderer.setSize(sizes.width, sizes.height)
 
@@ -43,11 +46,12 @@ controls.enableDamping = true
 /************
  ** MESHES **
  ************/
-const cubeGeometry = new THREE.BoxGeometry(1, 1, 1)
+// Cubes
+const cubeGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5)
 const cubeMaterial = new THREE.MeshNormalMaterial()
-const redMaterial = new THREE.MeshBasicMaterial({ color: new THREE.Color('red') })
-const greenMaterial = new THREE.MeshBasicMaterial({ color: new THREE.Color('green') })
-const blueMaterial = new THREE.MeshBasicMaterial({ color: new THREE.Color('blue') })
+const redMaterial = new THREE.MeshStandardMaterial({ color: new THREE.Color('red') })
+const greenMaterial = new THREE.MeshStandardMaterial({ color: new THREE.Color('green') })
+const blueMaterial = new THREE.MeshStandardMaterial({ color: new THREE.Color('blue') })
 const cube = new THREE.Mesh(cubeGeometry, cubeMaterial)
 
 const drawCube = (n, material) =>
@@ -65,6 +69,24 @@ const drawCube = (n, material) =>
 	scene.add(cube)
 }
 
+// Floor
+const floorGeometry = new THREE.PlaneGeometry(10, 10)
+const floorMaterial = new THREE.MeshNormalMaterial({
+	emissive: new THREE.Color('yellow'),
+	side: THREE.DoubleSide
+})
+const floor = new THREE.Mesh(floorGeometry, floorMaterial)
+floor.rotation.x = Math.PI * 0.5
+floor.position.y = -5
+//scene.add(floor)
+
+
+/***********
+ ** LIGHT **
+ ***********/
+const directionalLight = new THREE.DirectionalLight( 0xffffff, 15)
+directionalLight.position.set(0, 30, 0)
+scene.add(directionalLight)
 
 /********
  ** UI **
@@ -72,10 +94,11 @@ const drawCube = (n, material) =>
 let preset = {}
 
 const uiobj = {
-	text: 'The quick brown fox jumped, over the lazy doge.',
-	term1: 'the',
-	term2: 'fox',
-	term3: 'doge',
+	text: '',
+	term1: 'raven',
+	term2: 'lenore',
+	term3: 'door',
+	turntable: false,
 	textArray: [],
 	saveText() {
 		saveText()
@@ -83,8 +106,34 @@ const uiobj = {
 	reveal() {
 		saveTerms()
 		parseTextAndTerms()
+	},
+	showRedMaterial() {
+		redMaterial.visible = true
+	},
+	hideRedMaterial(){
+		redMaterial.visible = false
+	},
+	showGreenMaterial(){
+		greenMaterial.visible = true
+	},
+	hideGreenMaterial(){
+		greenMaterial.visible = false
+	},
+	showBlueMaterial(){
+		blueMaterial.visible = true
+	},
+	hideBlueMaterial(){
+		blueMaterial.visible = false
 	}
 }
+
+
+// Load source text
+fetch('assets/the_raven.txt')
+	.then(response => response.text())
+	.then((data) => {
+		uiobj.text = data
+	})
 
 const ui = new dat.GUI()
 
@@ -94,10 +143,10 @@ textFolder
 	.add(uiobj, 'text')
 textFolder
 	.add(uiobj, 'saveText').name('Continue')
+textFolder.hide()
 
 // Terms
 const termsFolder = ui.addFolder('Search Terms')
-termsFolder.hide()
 termsFolder
 	.add(uiobj, 'term1')
 termsFolder
@@ -106,6 +155,46 @@ termsFolder
 	.add(uiobj, 'term3')
 termsFolder
 	.add(uiobj, 'reveal').name('Reveal')
+
+// Interaction
+const redFolder = ui.addFolder(`RED - ${uiobj.term1}`)
+const greenFolder = ui.addFolder(`GREEN - ${uiobj.term2}`)
+const blueFolder = ui.addFolder(`BLUE - ${uiobj.term3}`)
+const cameraFolder = ui.addFolder('Camera')
+
+redFolder.hide()
+greenFolder.hide()
+blueFolder.hide()
+cameraFolder.hide()
+
+redFolder
+	.add(uiobj, 'showRedMaterial')
+	.name('show')
+
+redFolder
+	.add(uiobj, 'hideRedMaterial')
+	.name('hide')
+
+greenFolder
+	.add(uiobj, 'showGreenMaterial')
+	.name('show')
+
+greenFolder
+	.add(uiobj, 'hideGreenMaterial')
+	.name('hide')
+
+blueFolder
+	.add(uiobj, 'showBlueMaterial')
+	.name('show')
+
+blueFolder
+	.add(uiobj, 'hideBlueMaterial')
+	.name('hide')
+
+cameraFolder
+	.add(uiobj, 'turntable')
+	.name('play/pause')
+
 
 // Functions
 const saveText = () =>
@@ -119,6 +208,10 @@ const saveTerms = () =>
 {
 	preset = termsFolder.save()
 	termsFolder.hide()
+	redFolder.show()
+	greenFolder.show()
+	blueFolder.show()
+	cameraFolder.show()
 }
 
 const parseTextAndTerms = () =>
@@ -145,8 +238,11 @@ const findTermInParsedText = (term, material) =>
 	for (let i = 0; i < uiobj.textArray.length; i++)
 	{
 		if(uiobj.textArray[i] === term){
-			console.log(term)
 			const n = (100 / uiobj.textArray.length) * i * 0.2
+			drawCube(n, material)
+			drawCube(n, material)
+			drawCube(n, material)
+			drawCube(n, material)
 			drawCube(n, material)
 		}
 	}
@@ -164,8 +260,12 @@ const animation = () =>
 	// Return elapsedTime
 	const elapsedTime = clock.getElapsedTime()
 
-	// rotate cube
-	//cube.rotation.x += 0.1
+	// Turntable Camera
+	if(uiobj.turntable){
+		camera.position.y = 15
+		camera.position.x = Math.sin(elapsedTime * 0.2) * 15
+		camera.position.z = Math.cos(elapsedTime * 0.2) * 15
+	}
 
 	// Orbit controls
 	controls.update()
