@@ -95,9 +95,9 @@ let preset = {}
 
 const uiobj = {
 	text: '',
-	term1: 'raven',
-	term2: 'lenore',
-	term3: 'door',
+	term1: '',
+	term2: '',
+	term3: '',
 	turntable: false,
 	textArray: [],
 	saveText() {
@@ -107,29 +107,35 @@ const uiobj = {
 		saveTerms()
 		parseTextAndTerms()
 	},
-	showRedMaterial() {
-		redMaterial.visible = true
-	},
-	hideRedMaterial(){
+	toggleRedMaterial() {
+		if(redMaterial.visible)
+		{
 		redMaterial.visible = false
+		} else {
+		redMaterial.visible = true
+		}
 	},
-	showGreenMaterial(){
-		greenMaterial.visible = true
-	},
-	hideGreenMaterial(){
+	toggleGreenMaterial() {
+		if(greenMaterial.visible)
+		{
 		greenMaterial.visible = false
+		} else {
+		greenMaterial.visible = true
+		}
 	},
-	showBlueMaterial(){
-		blueMaterial.visible = true
-	},
-	hideBlueMaterial(){
+	toggleBlueMaterial() {
+		if(blueMaterial.visible)
+		{
 		blueMaterial.visible = false
+		} else {
+		blueMaterial.visible = true
+		}
 	}
 }
 
 
 // Load source text
-fetch('assets/the_raven.txt')
+fetch('https://raw.githubusercontent.com/amephraim/nlp/master/texts/J.%20K.%20Rowling%20-%20Harry%20Potter%201%20-%20Sorcerer\'s%20Stone.txt')
 	.then(response => response.text())
 	.then((data) => {
 		uiobj.text = data
@@ -148,48 +154,32 @@ textFolder.hide()
 // Terms
 const termsFolder = ui.addFolder('Search Terms')
 termsFolder
-	.add(uiobj, 'term1')
+	.add(uiobj, 'term1').name('Red term')
 termsFolder
-	.add(uiobj, 'term2')
+	.add(uiobj, 'term2').name('Green term')
 termsFolder
-	.add(uiobj, 'term3')
+	.add(uiobj, 'term3').name('Blue term')
 termsFolder
 	.add(uiobj, 'reveal').name('Reveal')
 
 // Interaction
-const redFolder = ui.addFolder(`RED - ${uiobj.term1}`)
-const greenFolder = ui.addFolder(`GREEN - ${uiobj.term2}`)
-const blueFolder = ui.addFolder(`BLUE - ${uiobj.term3}`)
+const cubeFolder = ui.addFolder('Cubes')
 const cameraFolder = ui.addFolder('Camera')
 
-redFolder.hide()
-greenFolder.hide()
-blueFolder.hide()
+cubeFolder.hide()
 cameraFolder.hide()
 
-redFolder
-	.add(uiobj, 'showRedMaterial')
-	.name('show')
+cubeFolder
+	.add(uiobj, 'toggleRedMaterial')
+	.name('Red')
 
-redFolder
-	.add(uiobj, 'hideRedMaterial')
-	.name('hide')
+cubeFolder
+	.add(uiobj, 'toggleGreenMaterial')
+	.name('Green')
 
-greenFolder
-	.add(uiobj, 'showGreenMaterial')
-	.name('show')
-
-greenFolder
-	.add(uiobj, 'hideGreenMaterial')
-	.name('hide')
-
-blueFolder
-	.add(uiobj, 'showBlueMaterial')
-	.name('show')
-
-blueFolder
-	.add(uiobj, 'hideBlueMaterial')
-	.name('hide')
+cubeFolder
+	.add(uiobj, 'toggleBlueMaterial')
+	.name('Blue')
 
 cameraFolder
 	.add(uiobj, 'turntable')
@@ -208,10 +198,13 @@ const saveTerms = () =>
 {
 	preset = termsFolder.save()
 	termsFolder.hide()
-	redFolder.show()
-	greenFolder.show()
-	blueFolder.show()
+	cubeFolder.show()
 	cameraFolder.show()
+
+	// Legend
+	document.getElementById("red").innerHTML = uiobj.term1
+	document.getElementById("green").innerHTML = uiobj.term2
+	document.getElementById("blue").innerHTML = uiobj.term3
 }
 
 const parseTextAndTerms = () =>
