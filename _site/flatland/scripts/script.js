@@ -38,11 +38,12 @@ testSphere.position.set(0, 0, 0)
 //scene.add(testSphere)
 
 // Torus Knot
-const torusKnotGeometry = new THREE.TorusKnotGeometry(1, 0.2)
+const torusKnotGeometry = new THREE.TorusGeometry(1, 0.2)
 const torusKnotMaterial = new THREE.MeshNormalMaterial({
 	wireframe: false,
 	clippingPlanes: [ localPlane ]
 })
+
 const torusKnot = new THREE.Mesh(torusKnotGeometry, torusKnotMaterial)
 
 torusKnot.position.set(0, 0, 0)
@@ -132,8 +133,8 @@ const animation = () =>
 	controls.update()
 
 	// Animate Sphere
-	torusKnot.rotation.x = elapsedTime * 0.5
-	torusKnot.rotation.y = elapsedTime * 0.5
+	torusKnot.rotation.x = elapsedTime * 0.75
+	torusKnot.rotation.y = elapsedTime * 0.75
 	if(sphereAnimationObject.active)
 	{
 		//testSphere.position.y = Math.sin(elapsedTime)

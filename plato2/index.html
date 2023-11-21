@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<head>
+	<title>Plato</title>
+
+	<!-- css -->
+	<link rel="stylesheet" href="style.css">
+	<script type="importmap">
+	  {
+	    "imports": {
+	      "three": "https://ga.jspm.io/npm:three@0.153.0/build/three.module.js",
+	      "OrbitControls" : "https://ga.jspm.io/npm:three@0.153.0/examples/jsm/controls/OrbitControls.js",
+	      "lil-gui" : "https://ga.jspm.io/npm:lil-gui@0.18.1/dist/lil-gui.esm.js"
+	    }
+	  }
+	</script>
+	<script src="scripts/script.js" type="module"></script>
+</head>
+
+<body>
+	<h1>The Allegory of the Cave</h1>
+
+	<!-- canvas 1 -->
+	<div class="canvas-container">
+	<canvas class="webgl"></canvas>
+	</div>
+
+	<section id="part-one">
+	<h2>Part One</h2>
+
+	<p>Our story begins with a row of people watching shapes against a wall. This is all they know. As they watch, the shapes begin to <a href="#" id="rotate-torus">move in place</a>. The people are stunned. What is happening? Then, something else happens: the shapes begin to <a href="#" id="move-torus">move back and forth</a>. "What are we seeing?" the people ask themselves.</p>
+	<p><a id="part-one-continue" href="#">Continue reading</a></p>
+	</section>
+
+	<section id="part-two" class="hidden">
+	<h2>Part Two</h2>
+
+	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut in nunc tincidunt, volutpat elit in, tincidunt sem. Donec augue ipsum, suscipit et cursus ut, volutpat sed erat. Aliquam vel turpis id mauris convallis tempor et id ante. Donec interdum lectus ut imperdiet tempor. Nulla et hendrerit tortor. Proin convallis enim arcu, a fringilla libero fermentum ac. Aenean viverra, massa sed porta dignissim, est ante semper arcu, et dignissim ante elit non nulla. Aenean scelerisque, sem a iaculis pellentesque, turpis est consequat lectus, eu venenatis urna felis eget diam. Cras in ipsum leo. Nullam sodales odio in dapibus sodales. Vestibulum sit amet neque dui.</p>
+
+	<p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Aliquam vel ligula sed sapien convallis porta nec ac orci. Donec efficitur vulputate enim at aliquam. Donec et odio aliquam, auctor magna nec, rutrum lectus. Pellentesque fringilla consequat malesuada. Aliquam blandit mauris nec eros convallis, ac viverra mi euismod. Sed mattis ex a dui ultrices maximus. Sed porttitor sapien ut justo convallis dapibus. Mauris vitae finibus dolor, vel maximus quam. Mauris vestibulum blandit fringilla. Integer auctor non lectus feugiat pharetra. Nunc vestibulum finibus vehicula. Cras auctor pretium justo ac egestas.</p>
+
+	<p><a id="part-two-continue" href="#">Continue reading</a></p>
+	</section>
+
+	<section id="part-three" class="hidden">
+	<h2>Part Three</h2>
+
+	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut in nunc tincidunt, volutpat elit in, tincidunt sem. Donec augue ipsum, suscipit et cursus ut, volutpat sed erat. Aliquam vel turpis id mauris convallis tempor et id ante. Donec interdum lectus ut imperdiet tempor. Nulla et hendrerit tortor. Proin convallis enim arcu, a fringilla libero fermentum ac. Aenean viverra, massa sed porta dignissim, est ante semper arcu, et dignissim ante elit non nulla. Aenean scelerisque, sem a iaculis pellentesque, turpis est consequat lectus, eu venenatis urna felis eget diam. Cras in ipsum leo. Nullam sodales odio in dapibus sodales. Vestibulum sit amet neque dui.</p>
+
+	<p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Aliquam vel ligula sed sapien convallis porta nec ac orci. Donec efficitur vulputate enim at aliquam. Donec et odio aliquam, auctor magna nec, rutrum lectus. Pellentesque fringilla consequat malesuada. Aliquam blandit mauris nec eros convallis, ac viverra mi euismod. Sed mattis ex a dui ultrices maximus. Sed porttitor sapien ut justo convallis dapibus. Mauris vitae finibus dolor, vel maximus quam. Mauris vestibulum blandit fringilla. Integer auctor non lectus feugiat pharetra. Nunc vestibulum finibus vehicula. Cras auctor pretium justo ac egestas.</p>
+
+	<p><a id="part-three-continue" href="#">Start over</a></p>
+	</section>
+
+	<!-- canvas 2 -->
+	<div class="canvas-container">
+	<canvas class="webgl2"></canvas>
+	</div>
+
+</body>
