@@ -77,7 +77,6 @@ scene.add(wall)
 const floor = new THREE.Mesh(planeGeometry, planeMaterial)
 floor.rotation.x = Math.PI * 0.5
 floor.position.set(2.5, -2.5, 0)
-floor.receiveShadow = true
 scene.add(floor)
 
 // Torus Knot
@@ -127,17 +126,19 @@ lightFolder
 	.max(10)
 	.step(0.1)
 	.name('sun z')
-*/
 
 // Camera
-const cameraUIObject = {}
+const cameraUIObject = {
+	x: 0,
+	y: 0,
+	z: 0
+}
 cameraUIObject.sun = false
 cameraUIObject.reset = () =>
 {
 	camera.position.set(5, 0.4, 0)
 }
 
-/*
 const cameraFolder = ui.addFolder('view')
 cameraFolder
 	.add(cameraUIObject, 'sun')
@@ -147,7 +148,6 @@ cameraFolder
 	.add(cameraUIObject, 'reset')
 	.name('Reset camera')
 
-/*
 cameraFolder
 	.add(camera.position, 'x')
 	.min(-10)
@@ -168,7 +168,14 @@ cameraFolder
 	.max(10)
 	.step(0.1)
 	.name('z')
-*/
+
+cameraFolder
+	.add(cameraUIObject, 'x')
+cameraFolder
+	.add(cameraUIObject, 'y')
+cameraFolder
+	.add(cameraUIObject, 'z')
+	*/
 
 /**********************
  ** DOM INTERACTIONS **
@@ -176,25 +183,27 @@ cameraFolder
 const domObject = {
 	part: 1,
 	rotateTorus: false,
-	moveTorus: false
+	moveTorus: false,
+	stopTorus: false,
+	sunSet: false
 }
 
 document.getElementById('part-one-continue').onclick = function(){
 	domObject.part = 2
 	document.getElementById('part-one').classList.add('hidden')
 	document.getElementById('part-two').classList.remove('hidden')
+	window.scroll({top: 0, behavior: 'smooth'})
 }
 
 document.getElementById('part-two-continue').onclick = function(){
-	domObject.part = 3
-	document.getElementById('part-two').classList.add('hidden')
-	document.getElementById('part-three').classList.remove('hidden')
-}
-
-document.getElementById('part-three-continue').onclick = function(){
 	domObject.part = 1
-	document.getElementById('part-three').classList.add('hidden')
 	document.getElementById('part-one').classList.remove('hidden')
+	document.getElementById('part-two').classList.add('hidden')
+	window.scroll({top: 0, behavior: 'smooth'})
+	domObject.rotateTorus = false
+	domObject.moveTorus = false
+	domObject.sunSet = false
+	directionalLight.position.set(10, 1.4, -1.8)
 }
 
 document.getElementById('rotate-torus').onclick = function(){
@@ -203,6 +212,15 @@ document.getElementById('rotate-torus').onclick = function(){
 
 document.getElementById('move-torus').onclick = function(){
 	domObject.moveTorus = true
+}
+
+document.getElementById('stop-moving-torus').onclick = function(){
+	domObject.moveTorus = false
+	domObject.stopTorus = true
+}
+
+document.getElementById('sun-set').onclick = function(){
+	domObject.sunSet = true
 }
 
 /********************
@@ -223,29 +241,26 @@ const animation = () =>
 	controls.update()
 	
 	// Animate camera
+	/*
 	if(cameraUIObject.sun)
 	{
-		//camera.lookAt(torusKnot.position)
+		camera.lookAt(torusKnot.position)
 	}
-	console.log(camera.position)
+	*/
 	
 	// DOM Object
+	// 1. Flatness
 	if(domObject.part === 1)
 	{
-		camera.position.set(4.8, -0.6, 3.9)
-		camera.lookAt(wall.position)
+		camera.position.set(5, 0, 5)
+		camera.lookAt(0, -0.5, 5)
 	}
+	// 2. Seeing Double
 	if(domObject.part === 2)
 	{
-		camera.position.set(3, -1.5, 0.2)
-		camera.lookAt(sun.position)
-	}
-	if(domObject.part === 3)
-	{
-		camera.position.set(9, 3.2, 15.3)
+		camera.position.set(9.5, 4.2, 14.11)
 		camera.lookAt(0, 0, 0)
 	}
-
 	// Rotate Torus
 	if(domObject.rotateTorus)
 	{
@@ -255,7 +270,19 @@ const animation = () =>
 	// Move Torus
 	if(domObject.moveTorus)
 	{
-		torusKnot.position.z = Math.sin(elapsedTime)
+		torusKnot.position.z = Math.sin(elapsedTime) * 10
+	}
+
+	// Stop Torus
+	if(domObject.stopTorus)
+	{
+		torusKnot.position.z = 0
+	}
+
+	// Sun Set
+	if(domObject.sunSet)
+	{
+		directionalLight.position.y -= elapsedTime * 0.001
 	}
 	
 
