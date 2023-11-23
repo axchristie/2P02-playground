@@ -10,6 +10,16 @@ const sizes = {
 	aspectRatio: window.innerWidth / window.innerHeight
 }
 
+let xDistance = 2
+let meshSize = 2
+
+// Mobile
+if(sizes.aspectRatio < 1)
+{
+	xDistance = 1
+	meshSize = 1
+}
+
 // Resizing
 window.addEventListener('resize', () =>
 	{
@@ -47,11 +57,11 @@ camera.position.set(0, 0, 5)
 scene.add(camera)
 
 // Test Sphere
-const geometry = new THREE.BoxGeometry(2, 2, 2)
+const geometry = new THREE.BoxGeometry(meshSize, meshSize, meshSize)
 const material = new THREE.MeshNormalMaterial()
 const cube = new THREE.Mesh(geometry, material)
 
-cube.position.set(-2, 0, 0)
+cube.position.set(-xDistance, 0, 0)
 scene.add(cube)
 
 // Renderer
