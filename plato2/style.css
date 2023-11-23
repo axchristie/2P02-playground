@@ -30,15 +30,6 @@ p {
 	color: orange;
 }
 
-a {
-	color: aqua;
-	text-decoration: none;
-}
-
-a:hover {
-	color: orange;
-}
-
 .webgl {
 	position: fixed;
 	top: 0;

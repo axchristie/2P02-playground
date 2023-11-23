@@ -14,7 +14,7 @@ let xDistance = 2
 if(sizes.aspectRatio < 1)
 {
 	// objects xDistance
-	 xDistance = 2
+	 xDistance = 1
 
 	// Viewport height
 	sizes.height = document.querySelector('#first').clientHeight

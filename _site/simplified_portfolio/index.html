@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<head>
+	<title>3D Portfolio</title>
+
+	<!-- css -->
+	<link rel="stylesheet" href="style.css">
+
+	<!-- three.js importmap -->
+	<script type="importmap">
+	  {
+	    "imports": {
+	      "three": "https://ga.jspm.io/npm:three@0.153.0/build/three.module.js",
+	      "OrbitControls" : "https://ga.jspm.io/npm:three@0.153.0/examples/jsm/controls/OrbitControls.js",
+	      "lil-gui" : "https://ga.jspm.io/npm:lil-gui@0.18.1/dist/lil-gui.esm.js"
+	    }
+	  }
+	</script>
+
+	<!-- three.js scene -->
+	<script src="script.js" type="module"></script>
+</head>
+<body>
+	<!-- canvas -->
+	<canvas class="webgl"></canvas>
+	<section class="splash">
+		<h1>Alex Christie</h1>
+	</section>
+
+	<section class="content" id="first">
+		<span>A short bio goes here.</span>
+		<span class="clickable" id="click1">View my projects</span>
+	</section>
+
+	<section class="content" id="second">
+		<h1>Interactive Essay</h1>
+		<span>About this project...</span>
+		<span class="clickable" id="click2">Next project</span>
+	</section>
+
+	<section class="content" id="third">
+		<h1>Data Visualizaton</h1>
+		<span>About this project</span>
+		<span class="clickable" id="click3">Back to Home</span>
+	</section>
+</body>
