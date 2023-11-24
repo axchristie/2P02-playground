@@ -1,4 +1,5 @@
 import * as THREE from "three"
+import { GLTFLoader } from "GLTFLoader"
 
 /***********
  ** SETUP **
@@ -56,13 +57,20 @@ const camera = new THREE.PerspectiveCamera(
 camera.position.set(0, 0, 5)
 scene.add(camera)
 
+// Lights
+const ambientLight = new THREE.AmbientLight(0x404040, 50)
+//scene.add(ambientLight)
+
+const directionalLight = new THREE.DirectionalLight(0x404040, 20)
+scene.add(directionalLight)
+
 // Test Sphere
 const geometry = new THREE.BoxGeometry(meshSize, meshSize, meshSize)
 const material = new THREE.MeshNormalMaterial()
 const cube = new THREE.Mesh(geometry, material)
 
 cube.position.set(-xDistance, 0, 0)
-scene.add(cube)
+//scene.add(cube)
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({
@@ -71,6 +79,29 @@ const renderer = new THREE.WebGLRenderer({
 	antialias: true
 })
 renderer.setSize(sizes.width, sizes.height)
+
+/*****************
+ ** GLTF MODELS **
+ *****************/
+const loader = new GLTFLoader()
+let model = null
+
+loader.load(
+	// resource URL
+	'assets/car/scene.gltf',
+	function(gltf){
+		model = gltf.scene
+		scene.add(model)
+
+		model.position.set(-2, 0, 0)
+	},
+	function(xhr){
+		//console.log('loading')
+	},
+	function(error){
+		//console.log('error loading 3D model')
+	}
+)
 
 /**********************
  ** DOM INTERACTIONS **
@@ -97,6 +128,20 @@ document.querySelector('#third').onclick = function(){
 	domObject.part = 1
 }
 
+/************
+ ** CURSOR **
+ ************/
+const cursor = {
+	x: 0,
+	y: 0
+}
+
+window.addEventListener('mousemove', () =>
+	{
+		cursor.x = event.clientX / sizes.width - 0.5
+		cursor.y = - event.clientY / sizes.height + 0.5
+	})
+
 /********************
  ** ANIMATION LOOP **
  ********************/
@@ -112,6 +157,8 @@ const animation = () =>
 	camera.position.y = - scrollY / sizes.height * 4
 
 	// DOM Object
+	// Cube
+	/*
 	if(domObject.part === 2)
 	{
 		if(cube.rotation.y <= Math.PI * 0.5)
@@ -133,6 +180,41 @@ const animation = () =>
 			cube.rotation.x -= 0.02
 			cube.rotation.y -= 0.02
 		}
+	}
+	*/
+	// 3D Model Rotation
+	/*
+	if(domObject.part === 2)
+	{
+		if(model.rotation.y <= Math.PI * 0.5)
+		{
+			model.rotation.y += 0.02
+		}
+	}
+	if(domObject.part === 3)
+	{
+		if(model.rotation.x <= Math.PI * 0.5)
+		{
+			model.rotation.x += 0.02
+		}
+	}
+	if(domObject.part === 1)
+	{
+		if(model){
+		if(model.rotation.x >= 0 && cube.rotation.y >= 0)
+		{
+			model.rotation.x -= 0.02
+			model.rotation.y -= 0.02
+		}
+		}
+	}
+	*/
+	// 3D Model Cursor Control
+	// console.log(cursor.x, cursor.y)
+	if(model)
+	{
+		model.rotation.y = cursor.x * 2
+		model.rotation.x = cursor.y + 0.25
 	}
 
 	// Renderer

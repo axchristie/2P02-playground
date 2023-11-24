@@ -31,7 +31,6 @@ body {
 	padding-left: 50%;
 	padding-right: 10%;
 	font-size: 3vmin;
-	line-height: 2em;
 }
 
 .content h1 {
@@ -47,6 +46,28 @@ body {
 	color: aqua;
 }
 
+a {
+	color: white;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: overline;
+}
+
 .hidden {
 	display: none;
+}
+
+.footer {
+	position: absolute;
+	bottom: 0;
+	color: white;
+	font-size: 12px;
+	text-align: center;
+	width: 100%;
+}
+
+.footer a {
+	color: white;
 }
