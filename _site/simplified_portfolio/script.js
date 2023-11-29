@@ -96,10 +96,10 @@ loader.load(
 		model.position.set(-2, 0, 0)
 	},
 	function(xhr){
-		//console.log('loading')
+		console.log('loading')
 	},
 	function(error){
-		//console.log('error loading 3D model')
+		console.log('error loading 3D model')
 	}
 )
 

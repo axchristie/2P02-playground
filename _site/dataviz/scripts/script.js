@@ -28,8 +28,8 @@ const camera = new THREE.PerspectiveCamera(
 	sizes.aspectRatio,
 	0.1,
 	100)
-camera.position.set(0, 20, -10)
-camera.lookAt(200, 500, 20)
+camera.position.set(0, 5, -17)
+camera.lookAt(0, 500, -500)
 scene.add(camera)
 
 // Renderer
@@ -58,10 +58,10 @@ const drawCube = (n, material) =>
 {
 	const cube = new THREE.Mesh(cubeGeometry, material)
 
-	cube.position.x = Math.random() * 10 - 5
-	cube.position.z = Math.random() * 10 - 5
-	cube.position.y = n
-
+	cube.position.x = (Math.random() - 0.5) * 10
+	cube.position.z = (Math.random() - 0.5) * 10
+	cube.position.y = n - 10
+	
 	cube.rotation.x = Math.random() * 2 * Math.PI
 	cube.rotation.y = Math.random() * 2 * Math.PI
 	cube.rotation.z = Math.random() * 2 * Math.PI
@@ -95,9 +95,9 @@ let preset = {}
 
 const uiobj = {
 	text: '',
-	term1: '',
-	term2: '',
-	term3: '',
+	term1: 'broom',
+	term2: 'hat',
+	term3: 'wand',
 	turntable: false,
 	textArray: [],
 	saveText() {
@@ -141,7 +141,9 @@ fetch('https://raw.githubusercontent.com/amephraim/nlp/master/texts/J.%20K.%20Ro
 		uiobj.text = data
 	})
 
-const ui = new dat.GUI()
+const ui = new dat.GUI({
+	title: 'Data Visualization'
+})
 
 // Text
 const textFolder = ui.addFolder('Source Text')
@@ -255,7 +257,7 @@ const animation = () =>
 
 	// Turntable Camera
 	if(uiobj.turntable){
-		camera.position.y = 15
+		camera.position.y = 10
 		camera.position.x = Math.sin(elapsedTime * 0.2) * 15
 		camera.position.z = Math.cos(elapsedTime * 0.2) * 15
 	}
