@@ -1,0 +1,69 @@
+body {
+	margin: 0 auto;
+	width: 80%;
+	font-family: arial;
+}
+
+p {
+	font-size: 24px;
+}
+
+h1, h2 {
+	color: black;
+	text-align: center;
+}
+
+h1 {
+	font-size: 48px;
+}
+
+h2 {
+	font-size: 36px;
+}
+
+ul > li {
+	display: inline-block;
+	margin-right: 5%;
+	margin-top: 1%;
+	font-size: 36px;
+}
+
+#red {
+	color: red;
+}
+
+#green {
+	color: green;
+}
+
+#blue {
+	color: blue;
+}
+
+#orange {
+	color: orange;
+}
+
+#purple {
+	color: purple;
+}
+
+#aqua {
+	color: aqua;
+}
+
+.canvas-container {
+	margin: 0 auto;
+	text-align: center;
+}
+
+.canvas-container p {
+	font-size: 16px;
+}
+
+.webgl, .webgl2 {
+	border-radius: 10px;
+}
+
+.lil-gui {
+}

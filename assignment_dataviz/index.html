@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<head>
+	<title>Dataviz</title>
+
+	<!-- css -->
+	<link rel="stylesheet" href="style.css">
+	<script type="importmap">
+	  {
+	    "imports": {
+	      "three": "https://ga.jspm.io/npm:three@0.153.0/build/three.module.js",
+	      "OrbitControls" : "https://ga.jspm.io/npm:three@0.153.0/examples/jsm/controls/OrbitControls.js",
+	      "lil-gui" : "https://ga.jspm.io/npm:lil-gui@0.18.1/dist/lil-gui.esm.js"
+	    }
+	  }
+	</script>
+	<script src="scripts/script.js" type="module"></script>
+	<script src="scripts/script2.js" type="module"></script>
+</head>
+
+<body>
+	<h1>My Awesome Title</h1>
+	<h2>Alex Christie</h2>
+
+	<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer fringilla orci sed egestas posuere. Nullam vel aliquet libero. Nulla sapien quam, sodales eu erat id, viverra ultricies orci. Duis a lobortis lacus, accumsan tincidunt risus. Donec luctus sollicitudin bibendum. Duis vitae fringilla massa. Praesent mattis vitae nisl sed rutrum. Integer eu mi vel est hendrerit mattis. Curabitur sed ex finibus, vehicula nunc sed, lacinia est. Integer iaculis erat finibus, molestie tortor at, vulputate sapien. Nulla placerat venenatis mauris in efficitur.</p>
+
+	<p> Nullam porta tellus ex, ut lacinia lacus efficitur quis. Nullam arcu dolor, pretium sed vestibulum quis, efficitur et augue. Donec lacinia nunc nec diam elementum dignissim. Integer enim libero, pharetra eget sagittis nec, auctor ut orci. Curabitur eget nisl facilisis, viverra lacus ac, commodo diam. Aenean et elementum eros, eget porttitor nunc. Vestibulum nec pretium elit, id dignissim odio. Morbi vulputate suscipit sem, quis convallis leo malesuada eu. Nam tincidunt dignissim dictum.</p>
+
+	<!-- dataviz 1 -->
+	<div class="canvas-container">
+		<h2>Objects in Harry Potter</h2>
+		<canvas class="webgl"></canvas>
+		<p>Left click and drag to rotate. Right click and drag to move. Scroll to zoom.</p>
+		<ul>
+			<li id="red">Cupboard</li>
+			<li id="green">Hat</li>
+			<li id="blue">Broom</li>
+		</ul>
+	</div>
+
+	<p> Nullam fringilla, leo id egestas ornare, mauris erat pellentesque lectus, non gravida ligula lectus sit amet lacus. Ut id arcu sed lectus pulvinar sodales vitae in nunc. In a sodales dolor. Nam molestie blandit eros, in vulputate nisi lobortis non. Donec sit amet sapien sagittis, suscipit ligula eget, porta leo. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam erat volutpat. Vivamus lacinia fringilla massa fermentum fermentum.</p>
+
+	<p> Nam faucibus dui nisl, vitae ornare magna venenatis nec. Sed non euismod magna. Nam luctus tellus ac sem mollis volutpat. Mauris vel orci commodo leo commodo hendrerit. Vivamus at lacinia mauris, a feugiat dui. Praesent consequat volutpat orci, eu dignissim quam condimentum ut. Integer a condimentum lectus, vel auctor ipsum. Donec tempus ante arcu, in dapibus lacus varius vel. Cras non metus condimentum, dapibus dolor at, pretium ligula. Cras in mauris vel magna tincidunt posuere eget id leo. Suspendisse odio lacus, sollicitudin quis lorem ac, placerat euismod sem.</p>
+
+	<!-- dataviz 2 -->
+	<div class="canvas-container">
+		<h2>Houses in Harry Potter</h2>
+		<canvas class="webgl2"></canvas>
+		<p>Left click and drag to rotate. Right click and drag to move. Scroll to zoom.</p>
+		<ul>
+			<li id="orange">Hufflepuff</li>
+			<li id="purple">Ravenclaw</li>
+			<!-- <li id="aqua"></li> -->
+		</ul>
+	</div>
+
+	<p> Pellentesque in ligula odio. Aenean quam neque, scelerisque at libero sed, laoreet aliquam dui. Maecenas sed orci vitae risus convallis accumsan. Sed porta ante ac quam efficitur, sed dapibus neque ullamcorper. Ut lobortis facilisis leo ut rhoncus. Mauris velit elit, convallis ut varius convallis, bibendum et ex. Nam at magna malesuada, pharetra risus et, dictum massa. Donec finibus enim lacinia, euismod turpis in, mollis eros. Donec at ante maximus, gravida quam sed, interdum ante.</p>
+
+	<p> Nulla dictum ex in odio pretium, vel tincidunt orci egestas. Aliquam sed dapibus purus. Vestibulum ullamcorper ipsum non neque sagittis, non aliquam ex ornare. Quisque at mollis velit, vitae mollis erat. Aliquam dictum in ligula sit amet blandit. Sed ultrices finibus varius. Phasellus condimentum sem mi, nec malesuada felis maximus id. Pellentesque viverra tristique ullamcorper. Donec arcu ex, gravida vel dolor ac, vestibulum egestas mi. Maecenas tortor nulla, dictum ut lacus non, convallis placerat risus. Fusce id turpis id nunc tristique interdum sit amet at lectus. Sed cursus diam ut metus cursus, laoreet laoreet risus vestibulum. Etiam elementum enim augue, ac pharetra mauris varius a. Curabitur quis egestas magna, id auctor magna. Ut ac erat nibh.</p>
+
+</body>
